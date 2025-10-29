@@ -84,6 +84,7 @@ For what argument does this program print `win` with variables 58, 2 and 3? File
   232/3=77
   ```
   `func` returns `77-input`.
+  
 - Therefore the arguement must be 77. The description says the number must be in hex, so I used a website to convert it:
   <img width="829" height="633" alt="image" src="https://github.com/user-attachments/assets/a2ebcb66-e97f-4718-96b3-0684c6d30b87" />
 
@@ -106,4 +107,16 @@ I didn't go off on any tangents but it did take me a long time to read the assem
 
 
 
-# 
+# 3. vault-door-3
+This vault uses for-loops and byte arrays. The source code for this vault is here: VaultDoor3.java
+
+## Solution:
+- This one was simpler than the others, I first marked the indices of the characters in the new string and then went through each loop in order to find the original password, which was the flag.
+
+## Flag
+
+`picoCTF{jU5t_a_s1mpl3_an4gr4m_4_u_79958f}`
+
+## Concepts learned
+
+I learned how to read java code.
