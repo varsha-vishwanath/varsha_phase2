@@ -55,12 +55,11 @@ End of assembler dump.
 
 ## Concepts learnt:
 
-- Include the new topics you've come across and explain them in brief
-- 
+I learned what a GDB is, how to use one on a surface-level and some dissassembly syntax.
 
 ## Notes:
 
-- I may have been able to find a website that would've help me dissassemble the file more easily, but i think the method I ended up using helped me become more familiar with using the wsl anyways.
+I may have been able to find a website that would've help me dissassemble the file more easily, but i think the method I ended up using helped me become more familiar with using the wsl anyways.
 
 ## Resources:
 
@@ -72,10 +71,39 @@ End of assembler dump.
 - https://www.rapidtables.com/convert/number/hex-to-decimal.html?x=86342
 
 
-# 2. Challenge name
+# 2. ARMssembly 1
 
-> Description
+For what argument does this program print `win` with variables 58, 2 and 3? File: chall_1.S Flag format: picoCTF{XXXXXXXX} -> (hex, lowercase, no 0x, and 32 bits. ex. 5614267 would be picoCTF{0055aabb})
 
-.
-.
-.
+## Solution:
+- So I first looked up what a `.S` file was and learned that it was a source code file written in assembly code. Now I just had to figure out how to read assembly code.
+- I first looked into the `main` section because that seemed the most familiar (from main functions in C). What I understood, after a lot of reading, was that the main function loads an input, performs a function `func` on it, and if the result is 0, it prints `You win!`, else it prints `You Lose :(`.
+- I looked at `func` and saw what it was doing with the input. I learned that it first took the number `58` and performs a left shift on its bits by `2`. Then it takes that result and divides it by `3`. Finally, it returns difference between the result and the input. So basically:
+  ```
+  58*2^2=232
+  232/3=77
+  ```
+  `func` returns `77-input`.
+- Therefore the arguement must be 77. The description says the number must be in hex, so I used a website to convert it:
+  <img width="829" height="633" alt="image" src="https://github.com/user-attachments/assets/a2ebcb66-e97f-4718-96b3-0684c6d30b87" />
+
+## Flag:
+
+` picoCTF{0000004d}`
+
+## Concepts learned:
+
+I learned how to read assembly code.
+
+## Notes:
+
+I didn't go off on any tangents but it did take me a long time to read the assembly code because I was completely unfamiliar with it.
+
+## Resources:
+- https://stackoverflow.com/questions/10285410/what-are-s-files
+- https://www.cse.iitd.ac.in/~srsarangi/archbook/chapters/arm.pdf
+- https://www.rapidtables.com/convert/number/decimal-to-hex.html?x=77
+
+
+
+# 
