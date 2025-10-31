@@ -81,7 +81,7 @@ I tried directly decrpyting the password with the oracle, but obviously that did
 
 
 
-## 2. Custom encryption
+# 2. Custom encryption
 
 Can you get sense of this code file and write the function that will decode the given encrypted file content.
 Find the encrypted file here flag_info and code file might be good to analyze and get the flag.
@@ -190,10 +190,3 @@ Let's decrypt this: ciphertext? Something seems a bit small.
 - https://www.dcode.fr/rsa-cipher
 - https://crypto.stackexchange.com/questions/33561/cube-root-attack-rsa-with-low-exponent
 
-
-
-
-
-
-
-# 2. Custom encryption
