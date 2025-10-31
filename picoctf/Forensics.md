@@ -4,12 +4,16 @@ Figure out how they moved the flag.
 ## Solution:
 - I first used my wsl to get wireshark and open the file. Since the challenge is about tftp, I first started looking into the file with that as the filter:
 <img width="1642" height="716" alt="image" src="https://github.com/user-attachments/assets/38dd6dae-cb09-4c17-b54c-3b9bdc4b4c2b" />
+
 - Then, I exported the files shown and opened the `instructions` file, thinking i'd get some direction, to find a bunch of encrypted text. I used an ROT13 cipher website to decode the message:
 <img width="959" height="859" alt="image" src="https://github.com/user-attachments/assets/99c42778-a1db-440c-9ec1-27cab832eb3a" />
+
 - Then my next move was to look at `plan`, where I found:
 <img width="954" height="849" alt="image" src="https://github.com/user-attachments/assets/4f6e455e-2cd7-46f9-b8e0-fa313ebd4d5b" />
+
 - That told me `DUEDILIGENCE` was some kind of password to the flag and it was hidden using the file `program.deb`. I had to look into the pictures to find the flag.
 - I figured `program.deb` would tell me more so I tried finding more about what it does:
+  
   ```
   vasha@Varsha:/mnt/c/users/varsha/desktop/cryptonite/tp2/tftp$ dpkg -I program.deb
    new Debian package, version 2.0.
