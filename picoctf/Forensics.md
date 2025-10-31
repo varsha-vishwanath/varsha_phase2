@@ -1,7 +1,9 @@
 # 1. Trivial Flag Transfer Protocol
+
 Figure out how they moved the flag.
 
 ## Solution:
+
 - I first used my wsl to get wireshark and open the file. Since the challenge is about tftp, I first started looking into the file with that as the filter:
 <img width="1642" height="716" alt="image" src="https://github.com/user-attachments/assets/38dd6dae-cb09-4c17-b54c-3b9bdc4b4c2b" />
 
@@ -47,6 +49,7 @@ Figure out how they moved the flag.
 `picoCTF{h1dd3n_1n_pLa1n_51GHT_18375919}`
 
 ## Concepts Learned:
+
 - I learned how to inspect TFTP traffic in Wireshark and export TFTP objects.
 - I learned how to inspect a .deb file with dpkg -I to discover what program was bundled.
 - I learned the basics of steganography with steghide (how to extract hidden files using a passphrase).
@@ -57,6 +60,7 @@ Figure out how they moved the flag.
 I originally tried using steghide to decode the images instead of a generic website because that was what the descritption mentioned. However, I kept running into errors and figured it would be easier to use a website
 
 ## Resources
+
 - https://rot13.com/
 - https://www.reddit.com/r/linux4noobs/comments/uwpme1/what_is_the_difference_between_a_deb_file_and_a/#:~:text=What%20is%20the%20difference%20between,Alexander%2D369
 - https://futureboy.us/stegano/decinput.html
@@ -64,9 +68,11 @@ I originally tried using steghide to decode the images instead of a generic webs
 
 
 # 2. tunn3l v1s10n
+
 We found this file. Recover the flag.
 
 ## Solution
+
 - When I first looked into the file, it said it was a generic data file. But this reminded me of the `M1D1` challenge from the citadel ctf so I decided to look into the hexdump of the file:
   ```
   vasha@Varsha:/mnt/c/users/varsha/downloads$ file tunn3l_v1s10n
@@ -92,15 +98,19 @@ We found this file. Recover the flag.
 <img width="1160" height="830" alt="image" src="https://github.com/user-attachments/assets/0fd03aea-193b-4c21-8894-7b58029e82cf" />
 
 ## Flag:
+
 `picoCTF{qu1t3_a_v13w_2020}`
 
 ## Concepts learned
+
 - I learned how to decipher a hexdump and learned its structure for .bmp files
 
 ## Notes
+
 - It took me a LONG time to finally settle on the height. I couldn't find an easier way to find the heigh of the actual image.
 
 ## Resources
+
 - https://en.wikipedia.org/wiki/List_of_file_signatures
 - https://www.ece.ualberta.ca/~elliott/ee552/studentAppNotes/2003_w/misc/bmp_file_format/bmp_file_format.htm
 - https://www.rapidtables.com/convert/number/decimal-to-hex.html?x=800
@@ -108,3 +118,22 @@ We found this file. Recover the flag.
 
 
 # 3. m00nwalk
+
+Decode this message from the moon.
+
+## Solution
+- Hint 1 states "How did pictures from the moon landing get sent back to Earth?". I looked into it and found that `sstv` is a method of transmission where still images were sent as radio frequencies and it was used to send images from the dark side of the moon from `Luna 3`.
+- Knowing that, I used an online sstv decoder to decode the frequencies from the `.wav` file:
+<img width="555" height="686" alt="image" src="https://github.com/user-attachments/assets/fa32afaa-7062-44c5-bb15-eb0d0410958c" />
+
+## Flag
+
+`picoCTF{beep_boop_im_in_space}`
+
+## Concepts learned
+
+- I learned about sstv
+
+## Resources
+- https://en.wikipedia.org/wiki/Slow-scan_television
+- https://sstv-decoder.mathieurenaud.fr/
