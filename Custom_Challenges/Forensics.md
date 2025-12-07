@@ -46,9 +46,11 @@ Two philosophers peer into the networked abyss and swap a secret. Use the secret
 ### Solution:
 I used  `wireshark` to analyze `abyss.pcap` and then filtered to find nonempty tcp packages. After looking through the packages I found a password and a  `.rar` file. Finally, I exported the rar file and used the password to unrar it which gave me the flag. 
 
-<img width="1918" height="1145" alt="Screenshot 2025-12-06 110546" src="https://github.com/user-attachments/assets/ee093ed7-ec7e-4407-997f-ab6c87a2fde4" />
+<img width="1919" height="1134" alt="Screenshot 2025-12-07 212113" src="https://github.com/user-attachments/assets/670099ad-dc13-46e3-a7c8-b2c72cc6f097" />
 
-<img width="1915" height="1147" alt="Screenshot 2025-12-06 110707" src="https://github.com/user-attachments/assets/e190d023-6bf3-49d0-a0c0-9610ceb9e127" />
+<img width="645" height="160" alt="Screenshot 2025-12-07 212121" src="https://github.com/user-attachments/assets/e47cf8e3-6a8f-4928-9020-0fbb34dc2df2" />
+
+<img width="1916" height="1132" alt="image" src="https://github.com/user-attachments/assets/a9dd0460-e4ae-4f8f-b053-34269ad8aa45" />
 
 <img width="1279" height="410" alt="abyss" src="https://github.com/user-attachments/assets/b4542688-3071-4e0b-a65b-555f49f0b3f0" />
 
