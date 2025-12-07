@@ -68,4 +68,19 @@ Hint:
 I named my Ninetails "j4gjesg4", quite a peculiar name isn't it?
 
 ### Solution:
+I extracted the `.ad1` file from the given `.rar` and then used `FTK Imager` to look for the files: `logins.json` and `key4.db`. Then I used `firefox_decrypt` to get the passwords and putting those together got me the flag.
+
+<img width="1413" height="520" alt="image" src="https://github.com/user-attachments/assets/f6cd4872-0503-45e4-adcc-e32f082b271b" />
+
+<img width="1628" height="738" alt="Screenshot 2025-12-07 184717" src="https://github.com/user-attachments/assets/5e5b88ba-5136-45cb-bb4a-8ffe8bd992b0" />
+
+### Flag:
+**Flag:** `GCTF{m0zarella_f1ref0x_p4ssw0rd}`
+
+
+
+## Re:Draw
+
+### Description:
+
 
