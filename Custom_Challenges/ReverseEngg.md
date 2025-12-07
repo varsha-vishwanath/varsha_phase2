@@ -355,3 +355,20 @@ H3{test_flag}
 
 ### Solution:
 
+I first checked the file's type and unzipped it before running `apktool d VeridisQuo.apk -o VeridisQuo_src` to get the APK. Then I used `jadx` to decompile the code to see what was going on. This is where I found 28 parts of the flag. Then I found out how the parts were structured in `resources<res<layout<activity_main.xml` then plotted the points to get the flag.
+
+<img width="1374" height="919" alt="image" src="https://github.com/user-attachments/assets/f5d7edda-ddb9-4aa2-b67d-54d6925fb5db" />
+
+<img width="1606" height="1108" alt="image" src="https://github.com/user-attachments/assets/938d40e5-2432-4c31-bcb2-8b2837089250" />
+
+### Flag:
+**Flag:** `byuctf{android_piece_0f_c4ke}`
+
+## dusty
+
+### Solution:
+
+1. dust_noob
+   
+
+
