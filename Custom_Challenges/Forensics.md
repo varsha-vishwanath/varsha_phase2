@@ -27,7 +27,7 @@ This challenge took me a bit because I originally used an incomplete password li
 One of my favorite foods is soya chunks. But as I was enjoying some Nutrela today, I noticed a few chunks weren’t quite right. Seems like something’s off with their structure. Could you help me fix these broken chunks so I can enjoy my meal again?
 
 ### Solution
-The original `nutrela.png` file seemed to be corrupted so i used `hexedit` to go in and change the magic bytes to the correct `.png` format. Then I kept using `pngcheck` to figure out what was wrong with the file and changed the bytes in hexedit accordingly. 
+The original `nutrela.png` file seemed to be corrupted so i used `hexedit` to go in and change the magic bytes to the correct `.png` format. Then I kept using `pngcheck` to figure out what was wrong with the file and changed the bytes in hexedit accordingly. Finally, I opened the image to get the flag.
 
 <img width="1000" height="852" alt="nutrela" src="https://github.com/user-attachments/assets/75c3e825-953d-411c-94ab-acaa1eb257f8" />
 
