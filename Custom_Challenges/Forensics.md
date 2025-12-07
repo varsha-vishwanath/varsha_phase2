@@ -154,7 +154,7 @@ Volatility Foundation Volatility Framework 2.6
 
 <img width="1914" height="1127" alt="Screenshot 2025-12-07 193306" src="https://github.com/user-attachments/assets/b83c7c75-4463-4a5b-bfd9-754d69a3433c" />
 
-3. For stage 3, I found `Important.rar` at `\Users\Alissa` and `Simpson\Documents\Important.rar`. I extracted the file and the NTLM hashes using `volatility --profile=Win7SP1x64 -f MemoryDump_Lab1.raw hashdump`. Then I used `7zip` to unzip the folder and open the flag using one of the hashes itself as the password. This stage took me a while as I originally used an online decrypter to decrypt the hashes instead.
+3. For stage 3, I found `Important.rar` at `\Users\Alissa` and `Simpson\Documents\Important.rar`. I extracted the file and the NTLM hashes using `volatility --profile=Win7SP1x64 -f MemoryDump_Lab1.raw hashdump`. Then I used `7zip` to unzip the folder and open the flag using one of the hashes itself (`F4FF64C8BAAC57D22F22EDC681055BA6`) as the password. This stage took me a while as I originally used an online decrypter to decrypt the hashes instead.
 
 ```
 PS C:\Users\Varsha\Downloads> & $vol -f $dump --profile=$profile filescan | Select-String -Pattern "\.(zip|rar|7z|tar)" -CaseSensitive:$false | Select -First 10
@@ -167,5 +167,9 @@ Volatility Foundation Volatility Framework 2.6
 
 <img width="1913" height="1142" alt="Screenshot 2025-12-07 193945" src="https://github.com/user-attachments/assets/7d4daf60-88a2-45c6-8d0e-39b207a39f22" />
 
+### Flag:
+**Flag 1:** `flag{th1s_1s_th3_1st_st4g3!!}`
 
+**Flag 2:** `flag{Good_BoY_good_girl_}`
 
+**Flag 3:** `flag{w3ll_3rd_stage_was_easy}`
