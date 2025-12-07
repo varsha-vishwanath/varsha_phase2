@@ -368,7 +368,169 @@ I first checked the file's type and unzipped it before running `apktool d Veridi
 
 ### Solution:
 
-1. dust_noob
+1. **dust_noob**
+   I tried running the binary, and then dissassembled it using `gdb`. I found where the main function was and dissassembled that and found a set of `movb` instructions that    was storing some bytes. The program was loading each byte from the array and XORing it with `0x3f` to get the flag. So I did exactly that and got the first flag.
+
+```
+   vasha@Varsha:/mnt/c/users/varsha/downloads$ file dust_noob
+dust_noob: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=0e91c3247b82497c448e69060be605936f5f06fe, for GNU/Linux 3.2.0, not stripped
+vasha@Varsha:/mnt/c/users/varsha/downloads$ ./dust_noob
+Shiny Clean™ Rust Remover Budget Edition! Looks like you didn't win this time! Try again?
+vasha@Varsha:/mnt/c/users/varsha/downloads$ gdb ./dust_noob
+GNU gdb (Ubuntu 15.0.50.20240403-0ubuntu1) 15.0.50.20240403-git
+Copyright (C) 2024 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from ./dust_noob...
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Enable debuginfod for this session? (y or [n]) y
+Debuginfod has been enabled.
+To make this setting permanent, add 'set debuginfod enabled on' to .gdbinit.
+Downloading separate debug info for /mnt/c/users/varsha/downloads/dust_noob
+(No debugging symbols found in ./dust_noob)
+warning: Missing auto-load script at offset 0 in section .debug_gdb_scripts
+of file /mnt/c/users/varsha/downloads/dust_noob.
+Use `info auto-load python-scripts [REGEXP]' to list them.
+(gdb) dissassemble main
+Undefined command: "dissassemble".  Try "help".
+(gdb) disassemble main
+Dump of assembler code for function main:
+   0x0000000000007d70 <+0>:     push   %rax
+   0x0000000000007d71 <+1>:     mov    %rsi,%rdx
+   0x0000000000007d74 <+4>:     lea    0x432e8(%rip),%rax        # 0x4b063 <__rustc_debug_gdb_scripts_section__>
+   0x0000000000007d7b <+11>:    mov    (%rax),%al
+   0x0000000000007d7d <+13>:    movslq %edi,%rsi
+   0x0000000000007d80 <+16>:    lea    -0x247(%rip),%rdi        # 0x7b40 <_ZN10shinyclean4main17h4b15dd54e331d693E>
+   0x0000000000007d87 <+23>:    xor    %ecx,%ecx
+   0x0000000000007d89 <+25>:    call   0x7ac0 <_ZN3std2rt10lang_start17h91ff47afc442db24E>
+   0x0000000000007d8e <+30>:    pop    %rcx
+   0x0000000000007d8f <+31>:    ret
+End of assembler dump.
+(gdb) disassemble 0x7b40
+Dump of assembler code for function _ZN10shinyclean4main17h4b15dd54e331d693E:
+   0x0000000000007b40 <+0>:     sub    $0x108,%rsp
+   0x0000000000007b47 <+7>:     lea    0x2a(%rsp),%rdi
+   0x0000000000007b4c <+12>:    xor    %esi,%esi
+   0x0000000000007b4e <+14>:    mov    $0x17,%edx
+   0x0000000000007b53 <+19>:    call   0x6050 <memset@plt>
+   0x0000000000007b58 <+24>:    movb   $0x7b,0x41(%rsp)
+   0x0000000000007b5d <+29>:    movb   $0x5e,0x42(%rsp)
+   0x0000000000007b62 <+34>:    movb   $0x48,0x43(%rsp)
+   0x0000000000007b67 <+39>:    movb   $0x58,0x44(%rsp)
+   0x0000000000007b6c <+44>:    movb   $0x7c,0x45(%rsp)
+   0x0000000000007b71 <+49>:    movb   $0x6b,0x46(%rsp)
+   0x0000000000007b76 <+54>:    movb   $0x79,0x47(%rsp)
+   0x0000000000007b7b <+59>:    movb   $0x44,0x48(%rsp)
+   0x0000000000007b80 <+64>:    movb   $0x79,0x49(%rsp)
+   0x0000000000007b85 <+69>:    movb   $0x6d,0x4a(%rsp)
+   0x0000000000007b8a <+74>:    movb   $0xc,0x4b(%rsp)
+   0x0000000000007b8f <+79>:    movb   $0xc,0x4c(%rsp)
+   0x0000000000007b94 <+84>:    movb   $0x60,0x4d(%rsp)
+   0x0000000000007b99 <+89>:    movb   $0x7c,0x4e(%rsp)
+   0x0000000000007b9e <+94>:    movb   $0xb,0x4f(%rsp)
+   0x0000000000007ba3 <+99>:    movb   $0x6d,0x50(%rsp)
+   0x0000000000007ba8 <+104>:   movb   $0x60,0x51(%rsp)
+   0x0000000000007bad <+109>:   movb   $0x68,0x52(%rsp)
+   0x0000000000007bb2 <+114>:   movb   $0xb,0x53(%rsp)
+   0x0000000000007bb7 <+119>:   movb   $0xa,0x54(%rsp)
+   0x0000000000007bbc <+124>:   movb   $0x77,0x55(%rsp)
+   0x0000000000007bc1 <+129>:   movb   $0x1e,0x56(%rsp)
+   0x0000000000007bc6 <+134>:   movb   $0x42,0x57(%rsp)
+   0x0000000000007bcb <+139>:   movq   $0x0,0x58(%rsp)
+   0x0000000000007bd4 <+148>:   mov    0x58(%rsp),%rax
+   0x0000000000007bd9 <+153>:   mov    %rax,0x20(%rsp)
+   0x0000000000007bde <+158>:   cmp    $0x17,%rax
+   0x0000000000007be2 <+162>:   jae    0x7c03 <_ZN10shinyclean4main17h4b15dd54e331d693E+195>
+   0x0000000000007be4 <+164>:   mov    0x20(%rsp),%rax
+   0x0000000000007be9 <+169>:   mov    0x41(%rsp,%rax,1),%al
+--Type <RET> for more, q to quit, c to continue without paging--RET
+   0x0000000000007bed <+173>:   mov    %al,0x17(%rsp)
+   0x0000000000007bf1 <+177>:   mov    0x58(%rsp),%rax
+   0x0000000000007bf6 <+182>:   mov    %rax,0x18(%rsp)
+   0x0000000000007bfb <+187>:   cmp    $0x17,%rax
+   0x0000000000007bff <+191>:   jb     0x7c1d <_ZN10shinyclean4main17h4b15dd54e331d693E+221>
+   0x0000000000007c01 <+193>:   jmp    0x7c42 <_ZN10shinyclean4main17h4b15dd54e331d693E+258>
+   0x0000000000007c03 <+195>:   mov    0x20(%rsp),%rdi
+   0x0000000000007c08 <+200>:   lea    0x4c969(%rip),%rdx        # 0x54578
+   0x0000000000007c0f <+207>:   lea    -0x8e1(%rip),%rax        # 0x7335 <_ZN4core9panicking18panic_bounds_check17h8307ccead484a122E>
+   0x0000000000007c16 <+214>:   mov    $0x17,%esi
+   0x0000000000007c1b <+219>:   call   *%rax
+   0x0000000000007c1d <+221>:   mov    0x18(%rsp),%rax
+   0x0000000000007c22 <+226>:   mov    0x17(%rsp),%cl
+   0x0000000000007c26 <+230>:   xor    $0x3f,%cl
+   0x0000000000007c29 <+233>:   mov    %cl,0x2a(%rsp,%rax,1)
+   0x0000000000007c2d <+237>:   mov    0x58(%rsp),%rax
+   0x0000000000007c32 <+242>:   add    $0x1,%rax
+   0x0000000000007c36 <+246>:   mov    %rax,0x8(%rsp)
+   0x0000000000007c3b <+251>:   setb   %al
+   0x0000000000007c3e <+254>:   jb     0x7c73 <_ZN10shinyclean4main17h4b15dd54e331d693E+307>
+   0x0000000000007c40 <+256>:   jmp    0x7c5c <_ZN10shinyclean4main17h4b15dd54e331d693E+284>
+   0x0000000000007c42 <+258>:   mov    0x18(%rsp),%rdi
+   0x0000000000007c47 <+263>:   lea    0x4c942(%rip),%rdx        # 0x54590
+   0x0000000000007c4e <+270>:   lea    -0x920(%rip),%rax        # 0x7335 <_ZN4core9panicking18panic_bounds_check17h8307ccead484a122E>
+   0x0000000000007c55 <+277>:   mov    $0x17,%esi
+   0x0000000000007c5a <+282>:   call   *%rax
+   0x0000000000007c5c <+284>:   mov    0x8(%rsp),%rax
+   0x0000000000007c61 <+289>:   mov    %rax,0x58(%rsp)
+   0x0000000000007c66 <+294>:   cmpq   $0x17,0x58(%rsp)
+   0x0000000000007c6c <+300>:   je     0x7c83 <_ZN10shinyclean4main17h4b15dd54e331d693E+323>
+   0x0000000000007c6e <+302>:   jmp    0x7bd4 <_ZN10shinyclean4main17h4b15dd54e331d693E+148>
+   0x0000000000007c73 <+307>:   lea    0x4c92e(%rip),%rdi        # 0x545a8
+   0x0000000000007c7a <+314>:   lea    -0x461(%rip),%rax        # 0x7820 <_ZN4core9panicking11panic_const24panic_const_add_overflow17hf2f4fb688348b3b0E>
+--Type <RET> for more, q to quit, c to continue without paging--q
+Quit
+(gdb)
+```
+
+Byte 1: 0x7b ⊕ 0x3f = 0x44 = 'D'
+Byte 2: 0x5e ⊕ 0x3f = 0x61 = 'a'
+Byte 3: 0x48 ⊕ 0x3f = 0x77 = 'w'
+Byte 4: 0x58 ⊕ 0x3f = 0x67 = 'g'
+Byte 5: 0x7c ⊕ 0x3f = 0x43 = 'C'
+Byte 6: 0x6b ⊕ 0x3f = 0x54 = 'T'
+Byte 7: 0x79 ⊕ 0x3f = 0x46 = 'F'
+Byte 8: 0x44 ⊕ 0x3f = 0x7b = '{'
+Byte 9: 0x79 ⊕ 0x3f = 0x46 = 'F'
+Byte 10: 0x6d ⊕ 0x3f = 0x52 = 'R'
+Byte 11: 0x0c ⊕ 0x3f = 0x33 = '3'
+Byte 12: 0x0c ⊕ 0x3f = 0x33 = '3'
+Byte 13: 0x60 ⊕ 0x3f = 0x5f = '_'
+Byte 14: 0x7c ⊕ 0x3f = 0x43 = 'C'
+Byte 15: 0x0b ⊕ 0x3f = 0x34 = '4'
+Byte 16: 0x6d ⊕ 0x3f = 0x52 = 'R'
+Byte 17: 0x60 ⊕ 0x3f = 0x5f = '_'
+Byte 18: 0x68 ⊕ 0x3f = 0x57 = 'W'
+Byte 19: 0x0b ⊕ 0x3f = 0x34 = '4'
+Byte 20: 0x0a ⊕ 0x3f = 0x35 = '5'
+Byte 21: 0x77 ⊕ 0x3f = 0x48 = '8'
+Byte 22: 0x1e ⊕ 0x3f = 0x21 = '!'
+Byte 23: 0x42 ⊕ 0x3f = 0x7d = '}'
+
+
+**Flag:** `DawgCTF{FR33_C4R_W458!}`
+
+2. **dust_intermediate**
+   I dissassembled the binary using ghidra and looked into `shinyclean2::main` to find out what's going on.
+
+   <img width="1916" height="1145" alt="image" src="https://github.com/user-attachments/assets/50b6833d-6e51-4194-91f9-5a878b87f75e" />
+
+   
+
+
+
    
 
 
