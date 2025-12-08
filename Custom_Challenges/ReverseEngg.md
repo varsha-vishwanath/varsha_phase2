@@ -4,6 +4,13 @@
 
 ### Solution:
 
+I used ghidra to decompile `disorder` and found that the original secret was being encrypted. The bits on `palatinepackflag.txt` were flipped and expanded thrice before being placed in the given `flag.txt`. I used a python script to reverse this logic which allowed me to find the flag.
+
+(note: my ghidra is acting up right now, will paste the screenshots and logic as soon as it's up and working again)
+
+### Flag:
+**Flag:** `sunshine{C3A5ER_CR055ED_TH3_RUB1C0N}`
+
 
 
 ## worthy.knight
