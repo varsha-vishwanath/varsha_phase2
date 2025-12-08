@@ -6,7 +6,47 @@
 
 I used ghidra to decompile `disorder` and found that the original secret was being encrypted. The bits on `palatinepackflag.txt` were flipped and expanded thrice before being placed in the given `flag.txt`. I used a python script to reverse this logic which allowed me to find the flag.
 
-(note: my ghidra is acting up right now, will paste the screenshots and logic as soon as it's up and working again)
+```
+vasha@Varsha:/mnt/c/users/varsha/downloads$ ./disorder
+
+May Jupiter strike you down Caeser before you seize the treasury!! You will have to tear me apart
+for me to tell you the flag to unlock the Roman Treasury and fund your civil war. I, Lucius Caecilius
+Metellus, shall not let you pass until you get this password right. (or threaten to kill me-)
+```
+
+<img width="1912" height="888" alt="image" src="https://github.com/user-attachments/assets/3b9cf447-8dce-45a0-aa0c-a0a2673e045e" />
+
+```
+def collapse(s: bytes) -> bytearray:
+    res = bytearray()
+    for i in range(len(s) // 2):
+        if i % 2 == 0:
+            res.append((s[2 * i] & 0x0F) | (s[2 * i + 1] & 0xF0))
+        else:
+            res.append((s[2 * i] & 0xF0) | (s[2 * i + 1] & 0x0F))
+    return res
+
+def main():
+    data = open("flag.txt", "rb").read()
+
+    data = collapse(data)
+    data = collapse(data)
+    data = collapse(data)
+
+    data = bytearray(data)
+    v3 = 105
+    for i in range(len(data)):
+        if i % 2 == 0:
+            data[i] = (~data[i]) & 0xFF
+        else:
+            data[i] ^= v3 & 0xFF
+            v3 += 32
+
+    print(data.decode(errors="ignore"))
+
+if __name__ == "__main__":
+    main()
+```
 
 ### Flag:
 **Flag:** `sunshine{C3A5ER_CR055ED_TH3_RUB1C0N}`
