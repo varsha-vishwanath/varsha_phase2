@@ -16,6 +16,7 @@ Metellus, shall not let you pass until you get this password right. (or threaten
 
 <img width="1912" height="888" alt="image" src="https://github.com/user-attachments/assets/3b9cf447-8dce-45a0-aa0c-a0a2673e045e" />
 
+
 ```
 def collapse(s: bytes) -> bytearray:
     res = bytearray()
@@ -576,6 +577,8 @@ Byte 23: 0x42 ⊕ 0x3f = 0x7d = '}'
     0xEA 0xD9 0x31 0x22 0xD3 0xE6 0x97 0x70 0x16 0xA2 0xA8 0x1B 0x61 0xFC 0x76 0x68 0x7B 0xAB 0xB8 0x27 0x96
     ```
 
+    <img width="1916" height="1145" alt="image" src="https://github.com/user-attachments/assets/50b6833d-6e51-4194-91f9-5a878b87f75e" />
+
     The program reads input, spawns a thread that XORs each byte with `0xFF`, then compares the result to those bytes. So I just did the reverse: XOR each target byte with     `0xFF` to get the input.
 
     ```
@@ -586,14 +589,10 @@ Byte 23: 0x42 ⊕ 0x3f = 0x7d = '}'
 
     Feeding this to the binary gave the win message.
 
-   <img width="1916" height="1145" alt="image" src="https://github.com/user-attachments/assets/50b6833d-6e51-4194-91f9-5a878b87f75e" />
-
    **Flag:** `DawgCTF{S0000_CL43N!}`
 
 4. **dust_pro**
    Running the binary showed that it expected a code in return for the flag so I used gdb to disassemble the main and found that `shinyclean::main` is the real entry point.    Then I found that 25 bytes are being stored on stack in assembly. Then I located the expected `SHA` hash at address `0x5b134` in `.rodata` section. Then I found XOR         logic at address `0x9b67` : `xor 0xb7(%rsp,%rax,1),%cl`. So the program decrypts the bytes and compares it to make sure that `SHA-256` hash of the same matches the          given hash. From whwihc i got `code = 139 + (104<<8) + (105<<16) + (212<<24)`. That helped me get the flag.
-
-   
 
    
 <img width="1240" height="227" alt="image" src="https://github.com/user-attachments/assets/bcc3ddc7-20b6-4083-bc70-744d9f54f1e9" />
