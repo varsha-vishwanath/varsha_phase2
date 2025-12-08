@@ -527,7 +527,59 @@ Byte 23: 0x42 ⊕ 0x3f = 0x7d = '}'
 
    <img width="1916" height="1145" alt="image" src="https://github.com/user-attachments/assets/50b6833d-6e51-4194-91f9-5a878b87f75e" />
 
+
+3. **dust_pro**
+   Running the binary showed that it expected a code in return for the flag so I used gdb to disassemble the main and found that `shinyclean::main` is the real entry point.    Then I found that 25 bytes are being stored on stack in assembly. Then I located the expected `SHA` hash at address `0x5b134` in `.rodata` section. Then I found XOR         logic at address `0x9b67` : `xor 0xb7(%rsp,%rax,1),%cl`. So the program decrypts the bytes and compares it to make sure that `SHA-256` hash of the same matches the          given hash. From whwihc i got `code = 139 + (104<<8) + (105<<16) + (212<<24)`. That helped me get the flag.
+
    
+
+   
+<img width="1240" height="227" alt="image" src="https://github.com/user-attachments/assets/bcc3ddc7-20b6-4083-bc70-744d9f54f1e9" />
+
+```
+(gdb) x/30i 0x9b0f
+   0x9b0f <_ZN11shinyclean24main17h38206fcee08f84d4E+1295>:     mov    0x28(%rsp),%rax
+   0x9b14 <_ZN11shinyclean24main17h38206fcee08f84d4E+1300>:     and    $0x3,%rax
+   0x9b18 <_ZN11shinyclean24main17h38206fcee08f84d4E+1304>:     mov    %rax,0x8(%rsp)
+   0x9b1d <_ZN11shinyclean24main17h38206fcee08f84d4E+1309>:     cmp    $0x4,%rax
+   0x9b21 <_ZN11shinyclean24main17h38206fcee08f84d4E+1313>:
+    jae    0x9b40 <_ZN11shinyclean24main17h38206fcee08f84d4E+1344>
+   0x9b23 <_ZN11shinyclean24main17h38206fcee08f84d4E+1315>:     mov    0x28(%rsp),%rax
+   0x9b28 <_ZN11shinyclean24main17h38206fcee08f84d4E+1320>:     mov    0x8(%rsp),%rcx
+   0x9b2d <_ZN11shinyclean24main17h38206fcee08f84d4E+1325>:     mov    0x124(%rsp,%rcx,1),%cl
+   0x9b34 <_ZN11shinyclean24main17h38206fcee08f84d4E+1332>:     mov    %cl,0x7(%rsp)
+   0x9b38 <_ZN11shinyclean24main17h38206fcee08f84d4E+1336>:     cmp    $0x19,%rax
+   0x9b3c <_ZN11shinyclean24main17h38206fcee08f84d4E+1340>:
+    jb     0x9b5e <_ZN11shinyclean24main17h38206fcee08f84d4E+1374>
+   0x9b3e <_ZN11shinyclean24main17h38206fcee08f84d4E+1342>:
+    jmp    0x9b7a <_ZN11shinyclean24main17h38206fcee08f84d4E+1402>
+   0x9b40 <_ZN11shinyclean24main17h38206fcee08f84d4E+1344>:     mov    0x8(%rsp),%rdi
+   0x9b45 <_ZN11shinyclean24main17h38206fcee08f84d4E+1349>:     lea    0x64dac(%rip),%rdx        # 0x6e8f8
+   0x9b4c <_ZN11shinyclean24main17h38206fcee08f84d4E+1356>:
+    lea    -0x17be(%rip),%rax        # 0x8395 <_ZN4core9panicking18panic_bounds_check17h8307ccead484a122E>
+   0x9b53 <_ZN11shinyclean24main17h38206fcee08f84d4E+1363>:     mov    $0x4,%esi
+   0x9b58 <_ZN11shinyclean24main17h38206fcee08f84d4E+1368>:     call   *%rax
+   0x9b5a <_ZN11shinyclean24main17h38206fcee08f84d4E+1370>:
+    jmp    0x9b5c <_ZN11shinyclean24main17h38206fcee08f84d4E+1372>
+   0x9b5c <_ZN11shinyclean24main17h38206fcee08f84d4E+1372>:     ud2
+   0x9b5e <_ZN11shinyclean24main17h38206fcee08f84d4E+1374>:     mov    0x28(%rsp),%rax
+   0x9b63 <_ZN11shinyclean24main17h38206fcee08f84d4E+1379>:     mov    0x7(%rsp),%cl
+   0x9b67 <_ZN11shinyclean24main17h38206fcee08f84d4E+1383>:     xor    0xb7(%rsp,%rax,1),%cl
+   0x9b6e <_ZN11shinyclean24main17h38206fcee08f84d4E+1390>:     mov    %cl,0xb7(%rsp,%rax,1)
+   0x9b75 <_ZN11shinyclean24main17h38206fcee08f84d4E+1397>:
+    jmp    0x98c9 <_ZN11shinyclean24main17h38206fcee08f84d4E+713>
+   0x9b7a <_ZN11shinyclean24main17h38206fcee08f84d4E+1402>:     mov    0x28(%rsp),%rdi
+   0x9b7f <_ZN11shinyclean24main17h38206fcee08f84d4E+1407>:     lea    0x64d8a(%rip),%rdx        # 0x6e910
+   0x9b86 <_ZN11shinyclean24main17h38206fcee08f84d4E+1414>:
+    lea    -0x17f8(%rip),%rax        # 0x8395 <_ZN4core9panicking18panic_bounds_check17h8307ccead484a122E>
+--Type <RET> for more, q to quit, c to continue without paging--quit
+Quit
+```
+
+<img width="550" height="71" alt="image" src="https://github.com/user-attachments/assets/3da580dd-a1d7-4cfe-bd7e-967d42d763a6" />
+
+**Flag:** `DawgCTF{4LL_RU57_N0_C4R!}`
+
 
 
 
