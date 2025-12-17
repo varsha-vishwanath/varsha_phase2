@@ -1,5 +1,18 @@
 # nitectf writeups
 
+## Warmup
+
+### Description
+Welcome to niteCTF 2025. Join our Discord Server: Link
+
+### Solution
+The announcements channel in the Discord server had the flag.
+
+### Flag
+**Flag:** `nite{h3r3's_t0_4n0th3r_sl33pl3ss_nite}`
+
+
+
 ## Antakshiri (AI)
 
 ### Description
@@ -228,4 +241,17 @@ nite{br0_i5_n0t_g0nn4_b3_t4K1n6_any1s_j0bs_34x}
 
 
 
-### Bonsai Ba
+## Bonsai Bankai (OSINT)
+
+### Description
+Geoguessr, but make it slightly more ragebait-y.
+Submit the correct location within a radius of 250 m to get the flag.
+
+### Solution
+We started by looking up the buildings on Google Lens and found a match on a local Japanese real estate site. The building's location was not on the map but the parking lot next to it was listed. This parking lot was 2 blocks down from the station. Using that location, gave us the flag.
+
+### Flag
+**Flag:** `nite{0n_th3_g4rden_0f_brok3n_dr3am5}`
+
+
+
