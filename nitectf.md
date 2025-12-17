@@ -255,3 +255,17 @@ We started by looking up the buildings on Google Lens and found a match on a loc
 
 
 
+## Database Reincursion (WebEx)
+
+### Description
+First day as an intern at Citadel Corp and i'm already making strides!
+Got rid of that bulky unnecessary security system and implemented my own simple solution.
+
+### Solution (Attempted)
+When first interacting with the challenge, the application presented a simple login form that accepted a username and password and consistently returned “Invalid username or password”. Given the challenge context (“intern security”, “simple solution”) and the fact that it was named Database Reincursion, our initial assumption was that this would be a backend vulnerability, most likely SQL injection or authentication logic bypass.
+
+The first approach was to test common SQL injection payloads as well as logic-based inputs like empty credentials or wildcard-style usernames. These attempts consistently failed, and in many cases the application returned: `Citadel SysSec: Input rejected by security filter`.
+
+This indicated the presence of a pre-auth input filter, likely blocking suspicious characters before the request ever reached the backend. Since SQL injection attempts were rejected at input validation level, this ruled out straightforward injection vectors. Browser developer tools revealed that the login form submission was handled via JavaScript rather than a traditional HTML form submission. This raised the possibility that: the filter was client-side and that backend logic might differ from what the frontend enforced.
+
+We found a WebAssembly binary named wasm_feature.wasm was discovered, but we realized that the website never actually loaded the WASM. Returning to the Network tab, closer inspection of the login request revealed tat the request was sent to `POST https://database.chals.nitectf25.live/`
