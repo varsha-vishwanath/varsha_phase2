@@ -51,3 +51,10 @@ I had to look through app permissions and revoke any unusual permissions (like p
 ## Challenge 9
 
 ### Solution:
+I had to select messages from a chatbot conversation that had private date (such as internal URLs and passwords) to get the flag: `THM{DontFeedTheBot}`
+
+
+## Challenge 10
+
+### Solution:
+I had to find web log entries from a suspicious user to get the flag: `THM{EastmasIsComing}`
